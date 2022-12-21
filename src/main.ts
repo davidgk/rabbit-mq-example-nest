@@ -1,16 +1,23 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { useContainer } from 'class-validator';
 import { configApp } from '@app/lib/config.app';
-import { SwaggerModule } from '@nestjs/swagger';
-import documentBuilder from '@config/swagger.config';
+import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
-  useContainer(app.select(AppModule), { fallbackOnErrors: true });
+  const app = await NestFactory.createMicroservice<MicroserviceOptions>(
+    AppModule,
+    {
+      transport: Transport.RMQ,
+      options: {
+        urls: ['amqp://localhost:5672'],
+        queue: 'cats_queue',
+        queueOptions: {
+          durable: false,
+        },
+      },
+    },
+  );
   configApp(app);
-  const document = SwaggerModule.createDocument(app, documentBuilder);
-  SwaggerModule.setup('docs', app, document);
-  await app.listen(process.env.PORT);
+  await app.listen();
 }
 bootstrap();

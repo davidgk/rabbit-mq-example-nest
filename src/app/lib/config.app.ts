@@ -1,6 +1,6 @@
-import { INestApplication, ValidationPipe } from '@nestjs/common';
+import { INestMicroservice, ValidationPipe } from '@nestjs/common';
 
-export const configApp = (app: INestApplication) => {
+export const configApp = (app: INestMicroservice) => {
   app.useGlobalPipes(
     new ValidationPipe({
       transform: true,
