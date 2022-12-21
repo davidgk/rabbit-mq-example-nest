@@ -14,6 +14,7 @@ module.exports = {
   detectOpenHandles: true,
   moduleNameMapper: {
     '@app/(.*)': '<rootDir>/src/app/$1',
+    '@cat/(.*)': '<rootDir>/src/cat/$1',
     '@config/(.*)': '<rootDir>/src/config/$1',
     '@commons/(.*)': '<rootDir>/src/commons/$1',
   },

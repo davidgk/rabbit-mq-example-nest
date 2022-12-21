@@ -9,7 +9,7 @@ async function bootstrap() {
     {
       transport: Transport.RMQ,
       options: {
-        urls: ['amqp://localhost:5672'],
+        urls: [process.env.RABBIT_MQ_ADDRESS],
         queue: 'cats_queue',
         queueOptions: {
           durable: false,
@@ -20,4 +20,5 @@ async function bootstrap() {
   configApp(app);
   await app.listen();
 }
+
 bootstrap();
